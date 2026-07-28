@@ -346,17 +346,71 @@
     }
 
     @media (max-width: 650px) {
-      main { width: calc(100% - 16px); padding: 8px 0 26px; align-items: start; }
-      .paper, .screen { min-height: calc(100vh - 34px); }
-      .paper { background: repeating-linear-gradient(0deg, transparent 0 31px, var(--blue-line) 32px 33px), var(--paper); }
+      main {
+        width: calc(100% - 32px);
+        min-height: 100dvh;
+        padding: max(22px, env(safe-area-inset-top)) 0 max(22px, env(safe-area-inset-bottom));
+        place-items: center;
+      }
+
+      .paper {
+        min-height: 0;
+        border-radius: 14px 18px 16px 12px;
+        background: repeating-linear-gradient(0deg, transparent 0 31px, var(--blue-line) 32px 33px), var(--paper);
+        box-shadow: 0 18px 45px rgba(77, 46, 46, .18);
+      }
+
       .paper::before, .stamp, .doodle { display: none; }
-      .screen { padding: 68px 22px 27px; }
+
+      .screen {
+        min-height: min(700px, calc(100dvh - 48px));
+        padding: 62px 18px 24px;
+      }
+
       .tape.left { left: 14px; }
       .tape.right { right: 14px; }
-      .choices, .date-fields, .summary { grid-template-columns: 1fr; }
-      .choice { min-height: 82px; }
+
+      h1 { font-size: clamp(3.25rem, 15vw, 4.5rem); }
+      h2 { font-size: clamp(2.8rem, 13vw, 4rem); }
+
+      .lede {
+        margin: 20px 0 22px;
+        font-size: .96rem;
+        line-height: 1.58;
+      }
+
+      .choices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+        margin: 20px 0;
+      }
+
+      .choice {
+        min-height: 104px;
+        padding: 12px 10px;
+      }
+
+      .choice .icon {
+        float: none;
+        display: block;
+        margin: 0 0 4px;
+        font-size: 1.45rem;
+      }
+
+      .choice strong { font-size: .88rem; }
+      .choice small { margin-top: 2px; font-size: .72rem; line-height: 1.28; }
+      .date-fields, .summary { grid-template-columns: 1fr; }
       .button-row { margin-top: 15px; }
-      .btn { flex-grow: 1; text-align: center; }
+      .btn { flex-grow: 1; padding: 12px 15px; text-align: center; }
+      .riddle-form { gap: 10px; }
+      .riddle-form input { min-width: 0; }
+      .note { font-size: 1.08rem; }
+    }
+
+    @media (max-width: 370px) {
+      main { width: calc(100% - 24px); }
+      .screen { padding-right: 14px; padding-left: 14px; }
+      .choice { min-height: 110px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
