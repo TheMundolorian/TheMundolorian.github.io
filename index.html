@@ -1,409 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marcos Raymundo Studio | Web Design</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7ed">
+  <title>Dinner With Me? 💌</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap");
+
+    :root {
+      --ink: #342a2a;
+      --muted: #796b6b;
+      --paper: #fffdf7;
+      --pink: #ff7898;
+      --pink-dark: #df4f72;
+      --blue-line: #cce2ef;
+      --yellow: #ffda76;
+      --green: #9bd5aa;
     }
+
+    * { box-sizing: border-box; }
 
     body {
-      font-family: Inter, Arial, sans-serif;
-      background: #050505;
-      color: #f5f3ff;
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(5, 5, 5, 0.85);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(168, 85, 247, 0.25);
-      padding: 22px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .logo span {
-      color: #a855f7;
-    }
-
-    nav a {
-      margin-left: 28px;
-      color: #c4b5fd;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #ffffff;
-    }
-
-    .hero {
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      padding: 90px 8%;
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(168, 85, 247, 0.35), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.25), transparent 35%),
-        #050505;
+        radial-gradient(circle at 9% 10%, rgba(255, 218, 118, .48), transparent 25rem),
+        radial-gradient(circle at 90% 85%, rgba(255, 120, 152, .25), transparent 27rem),
+        #fff7ed;
+      overflow-x: hidden;
     }
 
-    .hero-content {
-      max-width: 850px;
+    button, input { font: inherit; }
+
+    .doodle {
+      position: fixed;
+      z-index: 0;
+      color: rgba(223, 79, 114, .18);
+      font-family: "Caveat", cursive;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .badge {
-      display: inline-block;
-      margin-bottom: 24px;
-      padding: 8px 16px;
-      border: 1px solid rgba(168, 85, 247, 0.45);
-      border-radius: 999px;
-      color: #d8b4fe;
-      background: rgba(168, 85, 247, 0.08);
-      font-size: 0.9rem;
+    .doodle.one { top: 7vh; left: 4vw; font-size: 5rem; transform: rotate(-15deg); }
+    .doodle.two { top: 13vh; right: 5vw; font-size: 3.7rem; transform: rotate(12deg); }
+    .doodle.three { bottom: 6vh; left: 5vw; font-size: 3.5rem; transform: rotate(8deg); }
+    .doodle.four { right: 4vw; bottom: 7vh; font-size: 4.6rem; transform: rotate(-9deg); }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(900px, calc(100% - 28px));
+      min-height: 100vh;
+      margin: auto;
+      padding: 32px 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .paper {
+      position: relative;
+      width: 100%;
+      min-height: 630px;
+      overflow: hidden;
+      border: 1px solid rgba(52, 42, 42, .08);
+      border-radius: 9px 17px 11px 8px;
+      background:
+        linear-gradient(90deg, transparent 0 68px, rgba(235, 92, 114, .2) 69px 71px, transparent 72px),
+        repeating-linear-gradient(0deg, transparent 0 31px, var(--blue-line) 32px 33px),
+        var(--paper);
+      box-shadow: 0 25px 70px rgba(77, 46, 46, .16);
+      transform: rotate(-.3deg);
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 20px;
+      width: 22px;
+      background: radial-gradient(circle, #e8ded2 0 6px, transparent 7px) center 25px / 22px 72px repeat-y;
+    }
+
+    .tape {
+      position: absolute;
+      z-index: 3;
+      top: 14px;
+      width: 112px;
+      height: 34px;
+      background: rgba(255, 218, 118, .62);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+    }
+
+    .tape.left { left: 36px; transform: rotate(-8deg); }
+    .tape.right { right: 34px; transform: rotate(7deg); }
+
+    .screen {
+      display: none;
+      position: relative;
+      min-height: 630px;
+      padding: 78px 70px 52px 102px;
+      animation: arrive .4s ease both;
+    }
+
+    .screen.active { display: flex; flex-direction: column; }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--pink-dark);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 {
+      margin: 0;
+      font-family: "Caveat", cursive;
       font-weight: 700;
+      line-height: .95;
     }
 
-    .hero h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 0.95;
-      letter-spacing: -0.08em;
-      margin-bottom: 28px;
+    h1 { max-width: 680px; font-size: clamp(4.3rem, 10vw, 7.3rem); }
+    h2 { max-width: 680px; font-size: clamp(3rem, 7vw, 5rem); }
+
+    .scribble {
+      position: relative;
+      display: inline-block;
+      color: var(--pink-dark);
     }
 
-    .hero h1 span {
-      color: #a855f7;
+    .scribble::after {
+      content: "";
+      position: absolute;
+      right: -3%;
+      bottom: -.06em;
+      left: -3%;
+      height: 10px;
+      border-top: 4px solid var(--pink);
+      border-radius: 50%;
+      transform: rotate(-2deg);
     }
 
-    .hero p {
-      max-width: 640px;
-      color: #c4b5fd;
+    .lede {
+      max-width: 630px;
+      margin: 25px 0 28px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-family: "Caveat", cursive;
       font-size: 1.2rem;
-      margin-bottom: 36px;
+      transform: rotate(-1deg);
+    }
+
+    .progress {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 29px;
+    }
+
+    .progress span {
+      width: 64px;
+      height: 8px;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+    }
+
+    .progress span.done { background: var(--pink); }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+      margin: 28px 0;
+    }
+
+    .choice {
+      min-height: 92px;
+      padding: 15px 17px;
+      text-align: left;
+      color: var(--ink);
+      border: 2px solid rgba(52, 42, 42, .56);
+      border-radius: 15px 10px 14px 11px;
+      background: rgba(255, 255, 255, .73);
+      cursor: pointer;
+      transition: .17s ease;
+    }
+
+    .choice:nth-child(even) { transform: rotate(.4deg); }
+    .choice:hover { transform: translateY(-2px) rotate(-.4deg); border-color: var(--pink); }
+    .choice.selected { border-color: var(--pink-dark); background: #ffe7ee; box-shadow: 3px 4px 0 var(--pink); }
+    .choice .icon { float: left; margin: 0 13px 22px 0; font-size: 1.7rem; }
+    .choice strong { display: block; }
+    .choice small { display: block; margin-top: 4px; color: var(--muted); line-height: 1.35; }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      align-items: center;
+      margin-top: auto;
     }
 
     .btn {
-      display: inline-block;
-      padding: 15px 28px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #9333ea, #c084fc);
-      color: white;
+      padding: 14px 23px;
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 12px 9px 14px 10px;
+      background: var(--paper);
+      box-shadow: 4px 5px 0 var(--ink);
       font-weight: 800;
-      box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
-      transition: 0.3s;
+      cursor: pointer;
+      transition: .15s;
     }
 
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 55px rgba(168, 85, 247, 0.55);
+    .btn:hover { transform: translate(2px, 2px) rotate(-1deg); box-shadow: 2px 3px 0 var(--ink); }
+    .btn:focus-visible, .choice:focus-visible, input:focus-visible { outline: 4px solid rgba(117, 199, 223, .55); outline-offset: 3px; }
+    .btn.primary { color: white; background: var(--pink); }
+    .btn.calendar { background: var(--green); }
+    .btn.secondary { border-color: #9f8f8f; box-shadow: 3px 4px 0 #9f8f8f; }
+    .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+    .decision-zone {
+      position: relative;
+      min-height: 86px;
+      margin-top: auto;
     }
 
-    section {
-      padding: 90px 8%;
-    }
+    .decision-zone .button-row { margin-top: 0; }
 
-    .section-title {
-      max-width: 720px;
-      margin-bottom: 45px;
-    }
-
-    .section-title h2 {
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
-      margin-bottom: 16px;
-    }
-
-    .section-title p {
-      color: #a78bfa;
-      font-size: 1.05rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(24, 24, 27, 0.95), rgba(10, 10, 10, 0.95));
-      border: 1px solid rgba(168, 85, 247, 0.22);
-      border-radius: 24px;
-      padding: 30px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(168, 85, 247, 0.75);
-      box-shadow: 0 20px 60px rgba(88, 28, 135, 0.28);
-    }
-
-    .card h3 {
-      color: #e9d5ff;
+    .verdict {
+      min-height: 30px;
+      margin: 8px 0 0;
+      color: var(--pink-dark);
+      font-family: "Caveat", cursive;
       font-size: 1.35rem;
-      margin-bottom: 12px;
-    }
-
-    .card p {
-      color: #c4b5fd;
-    }
-
-    .showcase-card {
-      overflow: hidden;
-      padding: 0;
-    }
-
-    .showcase-preview {
-      min-height: 220px;
-      background:
-        linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(49, 46, 129, 0.9)),
-        linear-gradient(45deg, #111, #333);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .showcase-preview h3 {
-      font-size: 2rem;
-      color: white;
-    }
-
-    .showcase-content {
-      padding: 28px;
-    }
-
-    .showcase-content small {
-      display: inline-block;
-      color: #c084fc;
-      margin-bottom: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .showcase-content p {
-      margin-bottom: 22px;
-    }
-
-    .outline-btn {
-      display: inline-block;
-      padding: 12px 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(192, 132, 252, 0.7);
-      color: #e9d5ff;
       font-weight: 700;
-      transition: 0.3s;
     }
 
-    .outline-btn:hover {
-      background: #a855f7;
-      color: white;
+    .riddle-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      max-width: 590px;
+      margin-top: 8px;
     }
 
-    .cta {
-      background:
-        radial-gradient(circle at center, rgba(168, 85, 247, 0.35), transparent 45%),
-        #0a0a0a;
-      border: 1px solid rgba(168, 85, 247, 0.25);
-      border-radius: 32px;
-      padding: 70px 40px;
-      text-align: center;
+    .riddle-form input {
+      flex: 1 1 240px;
+      margin: 0;
     }
 
-    .cta h2 {
-      font-size: clamp(2rem, 5vw, 4.5rem);
-      line-height: 1;
-      letter-spacing: -0.06em;
-      margin-bottom: 20px;
+    .riddle-feedback {
+      min-height: 31px;
+      margin: 15px 0 0;
+      color: var(--pink-dark);
+      font-family: "Caveat", cursive;
+      font-size: 1.35rem;
+      font-weight: 700;
     }
 
-    .cta p {
-      color: #c4b5fd;
+    .date-fields {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
       max-width: 620px;
-      margin: 0 auto 32px;
+      margin: 30px 0;
     }
 
-    footer {
-      padding: 35px 8%;
-      color: #8b5cf6;
-      border-top: 1px solid rgba(168, 85, 247, 0.18);
-      text-align: center;
+    label { font-size: .84rem; font-weight: 800; }
+
+    input {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px;
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .82);
     }
 
-    @media (max-width: 760px) {
-      header {
-        flex-direction: column;
-        gap: 16px;
-      }
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0 27px;
+    }
 
-      nav a {
-        margin: 0 10px;
-      }
+    .summary-item {
+      padding: 14px 16px;
+      border: 1.5px dashed rgba(52, 42, 42, .48);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .6);
+    }
 
-      .hero {
-        min-height: auto;
-      }
+    .summary-item span {
+      display: block;
+      color: var(--pink-dark);
+      font-size: .67rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .summary-item strong { display: block; margin-top: 4px; }
+
+    .stamp {
+      position: absolute;
+      right: 50px;
+      bottom: 36px;
+      padding: 8px 12px;
+      color: rgba(223, 79, 114, .55);
+      border: 3px solid rgba(223, 79, 114, .45);
+      font-weight: 900;
+      text-transform: uppercase;
+      transform: rotate(-10deg);
+    }
+
+    .confetti {
+      position: fixed;
+      z-index: 10;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      pointer-events: none;
+      animation: fall 2.8s linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translate3d(var(--drift), 105vh, 0) rotate(760deg); opacity: .2; }
+    }
+
+    @media (max-width: 650px) {
+      main { width: calc(100% - 16px); padding: 8px 0 26px; align-items: start; }
+      .paper, .screen { min-height: calc(100vh - 34px); }
+      .paper { background: repeating-linear-gradient(0deg, transparent 0 31px, var(--blue-line) 32px 33px), var(--paper); }
+      .paper::before, .stamp, .doodle { display: none; }
+      .screen { padding: 68px 22px 27px; }
+      .tape.left { left: 14px; }
+      .tape.right { right: 14px; }
+      .choices, .date-fields, .summary { grid-template-columns: 1fr; }
+      .choice { min-height: 82px; }
+      .button-row { margin-top: 15px; }
+      .btn { flex-grow: 1; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition: none !important; }
     }
   </style>
 </head>
-
 <body>
-
-  <header>
-    <div class="logo">Marcos<span>Studio</span></div>
-
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#showcase">Showcase</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div class="doodle one" aria-hidden="true">♡</div>
+  <div class="doodle two" aria-hidden="true">C + M</div>
+  <div class="doodle three" aria-hidden="true">xoxo</div>
+  <div class="doodle four" aria-hidden="true">✦</div>
 
   <main>
-    <section class="hero">
-      <div class="hero-content">
-        <div class="badge">Modern websites for bold brands</div>
+    <section class="paper" aria-live="polite">
+      <div class="tape left" aria-hidden="true"></div>
+      <div class="tape right" aria-hidden="true"></div>
 
-        <h1>We design websites that feel <span>premium.</span></h1>
-
-        <p>
-          Marcos Raymundo Studio creates sleek, responsive, high-impact websites
-          for businesses, creators, events, and personal brands.
-        </p>
-
-        <a href="#contact" class="btn">Start a Project</a>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="section-title">
-        <h2>What we build</h2>
-        <p>
-          Clean design, smooth layouts, and modern web experiences made to help
-          your brand stand out online.
-        </p>
+      <div class="screen active" data-screen="0">
+        <p class="eyebrow">Wife verification • question 1 of 3</p>
+        <h1>Let's make sure it's <span class="scribble">really you.</span></h1>
+        <p class="lede"><strong>How many kids do we <em>currently</em> have?</strong></p>
+        <form class="riddle-form verification-form" data-answer="2">
+          <label for="verifyKids" style="position:absolute;left:-9999px">Your answer</label>
+          <input id="verifyKids" type="text" inputmode="numeric" autocomplete="off" placeholder="Your answer…" required>
+          <button class="btn primary" type="submit">That's my answer →</button>
+        </form>
+        <p class="riddle-feedback verification-feedback" aria-live="polite"></p>
+        <p class="note" style="margin-top:auto">Security level: family group chat.</p>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <h3>Website Design</h3>
-          <p>Custom layouts designed around your brand, audience, and goals.</p>
-        </div>
-
-        <div class="card">
-          <h3>Landing Pages</h3>
-          <p>High-converting pages for businesses, launches, events, and campaigns.</p>
-        </div>
-
-        <div class="card">
-          <h3>Responsive Builds</h3>
-          <p>Websites that look polished on desktop, tablet, and mobile.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="showcase">
-      <div class="section-title">
-        <h2>Client showcase</h2>
-        <p>
-          A collection of sites created for clients, events, and special projects.
-        </p>
+      <div class="screen" data-screen="1">
+        <p class="eyebrow">Wife verification • question 2 of 3</p>
+        <h1>So far, so <span class="scribble">good…</span></h1>
+        <p class="lede"><strong>What year did we move in together?</strong></p>
+        <form class="riddle-form verification-form" data-answer="2021">
+          <label for="verifyYear" style="position:absolute;left:-9999px">Your answer</label>
+          <input id="verifyYear" type="text" inputmode="numeric" autocomplete="off" placeholder="Four-digit year…" required>
+          <button class="btn primary" type="submit">Lock it in →</button>
+        </form>
+        <p class="riddle-feedback verification-feedback" aria-live="polite"></p>
+        <p class="note" style="margin-top:auto">Think back to when sharing a home became officially unavoidable.</p>
       </div>
 
-      <div class="grid">
-        <div class="card showcase-card">
-          <div class="showcase-preview">
-            <h3>Baby Sprinkle Invite</h3>
-          </div>
+      <div class="screen" data-screen="2">
+        <p class="eyebrow">Wife verification • final question</p>
+        <h1>One last <span class="scribble">test.</span></h1>
+        <p class="lede"><strong>Who won the 2026 NBA championship?</strong></p>
+        <form class="riddle-form verification-form" data-answer="knicks">
+          <label for="verifyChampions" style="position:absolute;left:-9999px">Your answer</label>
+          <input id="verifyChampions" type="text" autocomplete="off" placeholder="Team name…" required>
+          <button class="btn primary" type="submit">Final answer →</button>
+        </form>
+        <p class="riddle-feedback verification-feedback" aria-live="polite"></p>
+        <p class="note" style="margin-top:auto">This is definitely necessary and not at all biased.</p>
+      </div>
 
-          <div class="showcase-content">
-            <small>Event Website</small>
-            <h3>Baby Sprinkle Invitation</h3>
-            <p>
-              A custom event invitation website designed for sharing details,
-              celebrating the occasion, and giving guests an easy way to view the invite.
-            </p>
+      <div class="screen" data-screen="3">
+        <p class="eyebrow">Top secret • prove you're my wife</p>
+        <h1>Now, a little <span class="scribble">riddle…</span></h1>
+        <p class="lede"><strong>I hurt the most when lost, yet also when not had at all. I’m sometimes the hardest to express, but the easiest to ignore. I can be given to many, or just one. What am I?</strong></p>
+        <form class="riddle-form" id="riddleForm">
+          <label for="riddleAnswer" style="position:absolute;left:-9999px">Your answer</label>
+          <input id="riddleAnswer" type="text" autocomplete="off" placeholder="Type your answer…" required>
+          <button class="btn primary" type="submit">Unlock the note 🔐</button>
+        </form>
+        <p class="riddle-feedback" id="riddleFeedback" aria-live="polite"></p>
+        <p class="note" style="margin-top:auto">Hint: it has four letters, and I have plenty of it for you.</p>
+      </div>
 
-            <a href="/baby-sprinkle-invite/" class="outline-btn">View Project</a>
+      <div class="screen" data-screen="4">
+        <p class="eyebrow">A very official note for my wife</p>
+        <h1>Will you go to <span class="scribble">dinner</span> with me?</h1>
+        <p class="lede">Saturday, August 1 • afternoon • exact time TBD<br>I know we're already married, but I'm asking anyway. Choose one fun thing, choose what we eat, and I'll handle the rest.</p>
+        <div class="decision-zone" id="decisionZone">
+          <div class="button-row">
+            <button class="btn primary" id="yesBtn">Yes 💕</button>
+            <button class="btn secondary no-btn" id="noBtn">No</button>
           </div>
+          <p class="verdict" id="verdict" aria-live="polite"></p>
         </div>
+        <p class="note">Please choose carefully.</p>
+      </div>
 
-        <div class="card showcase-card">
-          <div class="showcase-preview">
-            <h3>Brand Launch</h3>
-          </div>
-
-          <div class="showcase-content">
-            <small>Landing Page</small>
-            <h3>Startup Launch Page</h3>
-            <p>
-              A sleek one-page website concept for announcing a new brand,
-              collecting leads, and creating momentum.
-            </p>
-
-            <a href="#contact" class="outline-btn">Request Similar</a>
-          </div>
+      <div class="screen" data-screen="5">
+        <div class="progress" aria-label="Step 1 of 2"><span class="done"></span><span></span></div>
+        <p class="eyebrow">First • pick our pre-dinner event</p>
+        <h2>What should we <span class="scribble">do?</span></h2>
+        <p class="note">Choose our adventure. I promise to handle the planning and snacks.</p>
+        <div class="choices" data-key="event">
+          <button class="choice" data-value="Board Games"><span class="icon">🎲</span><strong>Board Games</strong><small>Board games, cozy drinks, and very gracious winning.</small></button>
+          <button class="choice" data-value="Painting"><span class="icon">🎨</span><strong>Painting</strong><small>Create masterpieces—or at least something fridge-worthy.</small></button>
+          <button class="choice" data-value="Pottery"><span class="icon">🏺</span><strong>Pottery</strong><small>Make something cute and lovingly critique my technique.</small></button>
+          <button class="choice" data-value="Movies"><span class="icon">🎬</span><strong>Movies</strong><small>Reclining seats, popcorn, and no talking during previews.</small></button>
+          <button class="choice" data-value="Mini Golf"><span class="icon">⛳</span><strong>Mini Golf</strong><small>Friendly competition with suspiciously serious scorekeeping.</small></button>
+          <button class="choice" data-value="Escape Room"><span class="icon">🧩</span><strong>Escape Room</strong><small>Test our teamwork in a room we paid to get trapped in.</small></button>
+          <button class="choice" data-value="Beach Walk"><span class="icon">🌅</span><strong>Beach Walk</strong><small>Ocean air, sunset views, and an easy stroll together.</small></button>
+          <button class="choice" data-value="Axe Throwing"><span class="icon">🪓</span><strong>Axe Throwing</strong><small>Flannel optional. Dramatic victory poses encouraged.</small></button>
+          <button class="choice" data-value="Surprise Me"><span class="icon">🎁</span><strong>Surprise Me</strong><small>I plan the adventure and keep the details classified.</small></button>
         </div>
-
-        <div class="card showcase-card">
-          <div class="showcase-preview">
-            <h3>Local Business</h3>
-          </div>
-
-          <div class="showcase-content">
-            <small>Business Website</small>
-            <h3>Service Business Website</h3>
-            <p>
-              A modern business website layout built to highlight services,
-              build trust, and help visitors get in touch quickly.
-            </p>
-
-            <a href="#contact" class="outline-btn">Request Similar</a>
-          </div>
+        <div class="button-row">
+          <button class="btn secondary back">← Back</button>
+          <button class="btn primary next" disabled>Choose dinner →</button>
         </div>
       </div>
-    </section>
 
-    <section id="contact">
-      <div class="cta">
-        <h2>Ready for a website that stands out?</h2>
-        <p>
-          Let’s build a modern web presence that looks sharp, works beautifully,
-          and helps your brand grow.
-        </p>
+      <div class="screen" data-screen="6">
+        <div class="progress" aria-label="Step 2 of 2"><span class="done"></span><span class="done"></span></div>
+        <p class="eyebrow">Second • the most important part</p>
+        <h2>What's for <span class="scribble">dinner?</span></h2>
+        <div class="choices" data-key="food">
+          <button class="choice" data-value="Japanese"><span class="icon">🍣</span><strong>Japanese</strong><small>Sushi, noodles, hibachi, and elite little sauces.</small></button>
+          <button class="choice" data-value="Mexican"><span class="icon">🌮</span><strong>Mexican</strong><small>Tacos, burritos, and important salsa negotiations.</small></button>
+          <button class="choice" data-value="Italian"><span class="icon">🍝</span><strong>Italian</strong><small>Pasta, pizza, and accidental rom-com energy.</small></button>
+          <button class="choice" data-value="Steakhouse"><span class="icon">🥩</span><strong>Steakhouse</strong><small>A proper dinner with sides we absolutely will share.</small></button>
+          <button class="choice" data-value="American"><span class="icon">🍔</span><strong>American</strong><small>Burgers, fries, sandwiches—the dependable classics.</small></button>
+          <button class="choice" data-value="Chinese"><span class="icon">🥟</span><strong>Chinese</strong><small>Dumplings, noodles, and ordering enough for tomorrow.</small></button>
+          <button class="choice" data-value="Café / Brunch"><span class="icon">🥪</span><strong>Café / Brunch</strong><small>Cozy sandwiches, pancakes, pastries, or all three.</small></button>
+          <button class="choice" data-value="Indian"><span class="icon">🍛</span><strong>Indian</strong><small>Curries, naan, and the correct amount of extra rice.</small></button>
+          <button class="choice" data-value="Surprise Me"><span class="icon">🎁</span><strong>Surprise Me</strong><small>I choose the restaurant and reveal it when we get there.</small></button>
+        </div>
+        <div class="button-row">
+          <button class="btn secondary back">← Back</button>
+          <button class="btn primary" id="finishBtn" disabled>See our date →</button>
+        </div>
+      </div>
 
-        <a href="mailto:hello@example.com" class="btn">Get In Touch</a>
+      <div class="screen" data-screen="7">
+        <p class="eyebrow">Official date plan • crush confirmed</p>
+        <h2>It's a <span class="scribble">date!</span> 🎉</h2>
+        <p class="lede">Great choices. Your taste remains impeccable, especially regarding husbands.</p>
+        <div class="summary">
+          <div class="summary-item"><span>Before dinner</span><strong id="summaryEvent"></strong></div>
+          <div class="summary-item"><span>Dinner</span><strong id="summaryFood"></strong></div>
+          <div class="summary-item" style="grid-column: 1 / -1"><span>When</span><strong>Saturday, August 1 • afternoon • time TBD</strong></div>
+        </div>
+        <div class="button-row">
+          <button class="btn calendar" id="calendarBtn">＋ Add to calendar</button>
+        </div>
+        <p class="note">Dress code: comfortable and cute. I'll be the one staring at you.</p>
+        <div class="stamp" aria-hidden="true">Date approved</div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>© 2026 Marcos Raymundo Studio. Designed in black & purple.</p>
-  </footer>
+  <script>
+    const answers = { event: "", food: "" };
+    const screens = [...document.querySelectorAll(".screen")];
+    const noBtn = document.getElementById("noBtn");
+    const verdict = document.getElementById("verdict");
+    const finishBtn = document.getElementById("finishBtn");
+    const riddleForm = document.getElementById("riddleForm");
+    const riddleAnswer = document.getElementById("riddleAnswer");
+    const riddleFeedback = document.getElementById("riddleFeedback");
+    let current = 0;
 
+    const normalizeAnswer = (value) => value.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    const showScreen = (index) => {
+      current = index;
+      screens.forEach((screen, i) => screen.classList.toggle("active", i === index));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    document.querySelectorAll(".verification-form").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const input = form.querySelector("input");
+        const feedback = form.nextElementSibling;
+        const guess = normalizeAnswer(input.value);
+        const expected = form.dataset.answer;
+        const correct = guess === expected || (expected === "knicks" && guess === "newyorkknicks");
+        if (correct) {
+          feedback.textContent = "Correct. Identity looking increasingly legitimate. ✓";
+          setTimeout(() => showScreen(current + 1), 550);
+          return;
+        }
+        feedback.textContent = "Hmm… that does not match the highly classified wife records.";
+        input.select();
+      });
+    });
+
+    riddleForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const guess = normalizeAnswer(riddleAnswer.value);
+      if (guess === "love") {
+        riddleFeedback.textContent = "Correct. Wife credentials confirmed. 💕";
+        setTimeout(() => showScreen(4), 650);
+        return;
+      }
+      riddleFeedback.textContent = "Not quite… think of something felt deeply, even when it is hard to say.";
+      riddleAnswer.select();
+    });
+
+    document.getElementById("yesBtn").addEventListener("click", () => showScreen(5));
+
+    noBtn.addEventListener("click", () => {
+      noBtn.disabled = true;
+      noBtn.style.display = "none";
+      verdict.textContent = "Sorry, you're stuck with me—so you have to click Yes. 💕";
+    });
+
+    document.querySelectorAll(".choices").forEach((group) => {
+      group.addEventListener("click", (event) => {
+        const choice = event.target.closest(".choice");
+        if (!choice) return;
+        group.querySelectorAll(".choice").forEach((item) => {
+          item.classList.remove("selected");
+          item.setAttribute("aria-pressed", "false");
+        });
+        choice.classList.add("selected");
+        choice.setAttribute("aria-pressed", "true");
+        answers[group.dataset.key] = choice.dataset.value;
+        group.closest(".screen").querySelector(".next, #finishBtn").disabled = false;
+      });
+    });
+
+    document.querySelectorAll(".next").forEach((button) => {
+      button.addEventListener("click", () => showScreen(current + 1));
+    });
+
+    document.querySelectorAll(".back").forEach((button) => {
+      button.addEventListener("click", () => showScreen(current - 1));
+    });
+
+    const celebrate = () => {
+      const colors = ["#ff7898", "#ffda76", "#75c7df", "#9bd5aa", "#df4f72"];
+      for (let i = 0; i < 50; i++) {
+        const piece = document.createElement("i");
+        piece.className = "confetti";
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.background = colors[i % colors.length];
+        piece.style.setProperty("--drift", `${Math.random() * 180 - 90}px`);
+        piece.style.animationDelay = `${Math.random() * .55}s`;
+        piece.style.borderRadius = i % 3 === 0 ? "50%" : "2px";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3500);
+      }
+    };
+
+    finishBtn.addEventListener("click", () => {
+      document.getElementById("summaryEvent").textContent = answers.event;
+      document.getElementById("summaryFood").textContent = answers.food;
+      showScreen(7);
+      celebrate();
+    });
+
+    const toIcsDate = (date) => date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const escapeIcs = (text) => text.replace(/\\/g, "\\\\").replace(/,/g, "\\,").replace(/;/g, "\\;").replace(/\n/g, "\\n");
+
+    document.getElementById("calendarBtn").addEventListener("click", () => {
+      const description = `Event: ${answers.event}
+Dinner: ${answers.food}
+Time: Afternoon — exact time TBD
+
+I'll handle the plans, reservations, driving, parking, doors, and emergency snacks.`;
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Your Husband//Dinner Date Invite//EN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        `UID:${Date.now()}-dinner-date@love`,
+        `DTSTAMP:${toIcsDate(new Date())}`,
+        "DTSTART;VALUE=DATE:20260801",
+        "DTEND;VALUE=DATE:20260802",
+        `SUMMARY:${escapeIcs("Afternoon dinner date — time TBD 💕")}`,
+        `DESCRIPTION:${escapeIcs(description)}`,
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "our-dinner-date.ics";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+  </script>
 </body>
 </html>
